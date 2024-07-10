@@ -8,7 +8,7 @@
     "license": "AGPL-3",
     "category": "Accounting",
     "website": "https://github.com/lexiervalvesystems/odoo-addons",
-    "depends": ["account"],
+    "depends": ["account", "stock_picking_invoice_link", "lexier_sale"],
     "data": [
         "views/report_invoice_document.xml",
     ],
