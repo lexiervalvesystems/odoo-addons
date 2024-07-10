@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright NuoBiT - Frank Cespedes <fcespedes@nuobit.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl) -->
+<odoo>
+    <template
+        id="lexier_report_purchaseorder_document"
+        inherit_id="purchase.report_purchaseorder_document"
+        priority="100"
+    >
+        <xpath expr="//div[hasclass('page')]" position="attributes">
+            <attribute name="style">font-size: 16px;</attribute>
+        </xpath>
+        <xpath expr="//h2[1]" position="attributes">
+            <attribute name="style">font-size: 30px;</attribute>
+            <attribute name="class">mt-2 mb-2</attribute>
+        </xpath>
+        <xpath expr="//h2[2]" position="attributes">
+            <attribute name="style">font-size: 30px;</attribute>
+            <attribute name="class">mt-2 mb-2</attribute>
+        </xpath>
+        <xpath expr="//h2[3]" position="attributes">
+            <attribute name="style">font-size: 30px;</attribute>
+            <attribute name="class">mt-2 mb-2</attribute>
+        </xpath>
+        <xpath expr="//h2[4]" position="attributes">
+            <attribute name="style">font-size: 30px;</attribute>
+            <attribute name="class">mt-2 mb-2</attribute>
+        </xpath>
+        <t t-set="address" position="replace">
+            <t t-set="address">
+                <t t-if="o.partner_id.parent_id">
+                    <h5
+                        t-field="o.partner_id.parent_id.name"
+                        t-att-style="'color: %s;' % o.company_id.primary_color"
+                    />
+                    <span>Attn. <span t-field="o.partner_id.name" /></span>
+                </t>
+                <t t-else="">
+                    <h5
+                        t-field="o.partner_id.name"
+                        t-att-style="'color: %s;' % o.company_id.primary_color"
+                    />
+                </t>
+                <address
+                    t-field="o.partner_id"
+                    t-options='{"widget": "contact", "fields": ["address", "phone", "vat"], "no_marker": True, "phone_icons": True}'
+                />
+            </t>
+        </t>
+        <t t-set="information_block" position="replace">
+            <t t-set="information_block">
+                <strong>Delivery Address:</strong>
+                <div name="dest_address">
+                    <t t-if="o.dest_address_id.parent_id">
+                        <span t-field="o.dest_address_id.parent_id.name" />
+                        <div name="dest_address_name">
+                            <span>Attn. <span t-field="o.dest_address_id.name" /></span>
+                        </div>
+                    </t>
+                    <t t-else="">
+                        <span t-field="o.dest_address_id.name" />
+                    </t>
+                </div>
+                <address
+                    t-field="o.dest_address_id"
+                    t-options='{"widget": "contact", "fields": ["address", "phone"], "no_marker": True, "phone_icons": True}'
+                    name="purchase_shipping_address"
+                />
+            </t>
+        </t>
+        <xpath expr="//div[hasclass('page')]/table[1]/thead" position="attributes">
+            <attribute name="style">white-space: nowrap;</attribute>
+        </xpath>
+        <xpath expr="//th[@name='th_amount']/strong" position="replace">
+            <strong>Amount</strong>
+        </xpath>
+        <xpath expr="//th[@name='th_price_unit']/strong" position="replace">
+            <strong>Unit Price</strong>
+        </xpath>
+        <xpath expr="//p[@t-field='o.date_order']" position="replace">
+            <p t-field="o.date_order" t-options="{'widget': 'date'}" class="m-0" />
+        </xpath>
+        <xpath expr="//div[@t-if='o.partner_ref']/strong[1]" position="replace">
+            <strong>Order Confirmation Number:</strong>
+        </xpath>
+        <xpath expr="//th[@name='th_description']" position="before">
+            <th name="th_pos"><strong>Pos</strong></th>
+        </xpath>
+        <xpath expr="//td[@id='product']" position="before">
+            <td id="pos">
+                <span t-esc="line_index + 1" />
+            </td>
+        </xpath>
+        <xpath expr="//th[@name='th_description']/strong" position="replace">
+            <strong>Reference/Description</strong>
+        </xpath>
+        <xpath expr="//th[@name='th_taxes']" position="replace" />
+        <xpath expr="//td[@name='td_taxes']" position="replace" />
+        <xpath expr="//span[@t-field='line.date_planned']" position="replace">
+            <span t-field="line.date_planned" t-options="{'widget': 'date'}" />
+        </xpath>
+    </template>
+    <template
+        id="lexier_report_purchasestock_order_document"
+        inherit_id="purchase_stock.report_purchaseorder_document"
+        priority="100"
+    >
+        <xpath
+            expr="//div[@t-if='o.picking_type_id and o.picking_type_id.warehouse_id']/../strong"
+            position="replace"
+        >
+            <strong>Shipping address:</strong>
+        </xpath>
+        <xpath
+            expr="//div[@t-if='o.picking_type_id and o.picking_type_id.warehouse_id']"
+            position="replace"
+        >
+            <div>
+                <t t-if="o.picking_type_id.warehouse_id.partner_id.parent_id">
+                    <span
+                        t-field="o.picking_type_id.warehouse_id.partner_id.parent_id.name"
+                    />
+                    <div>
+                        <span>Attn. <span
+                                t-field="o.picking_type_id.warehouse_id.partner_id.name"
+                            /></span>
+                    </div>
+                </t>
+                <t t-else="">
+                    <span t-field="o.picking_type_id.warehouse_id.partner_id.name" />
+                </t>
+            </div>
+            <div
+                t-field="o.picking_type_id.warehouse_id.partner_id"
+                t-options='{"widget": "contact", "fields": ["address", "phone"], "no_marker": True, "phone_icons": True}'
+            />
+        </xpath>
+    </template>
+</odoo>
