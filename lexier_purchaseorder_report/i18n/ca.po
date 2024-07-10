@@ -1,0 +1,57 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* lexier_purchaseorder_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-07-24 14:14+0000\n"
+"PO-Revision-Date: 2024-07-24 14:14+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: lexier_purchaseorder_report
+#: model_terms:ir.ui.view,arch_db:lexier_purchaseorder_report.lexier_report_purchaseorder_document
+msgid "<strong>Amount</strong>"
+msgstr "<strong>Import</strong>"
+
+#. module: lexier_purchaseorder_report
+#: model_terms:ir.ui.view,arch_db:lexier_purchaseorder_report.lexier_report_purchaseorder_document
+msgid "<strong>Delivery Address:</strong>"
+msgstr "<strong>Direcció de lliurament:</strong>"
+
+#. module: lexier_purchaseorder_report
+#: model_terms:ir.ui.view,arch_db:lexier_purchaseorder_report.lexier_report_purchaseorder_document
+msgid "<strong>Order Confirmation Number:</strong>"
+msgstr "<strong>Número de Confirmació de Comanda:</strong>"
+
+#. module: lexier_purchaseorder_report
+#: model_terms:ir.ui.view,arch_db:lexier_purchaseorder_report.lexier_report_purchaseorder_document
+msgid "<strong>Pos</strong>"
+msgstr "<strong>Pos</strong>"
+
+#. module: lexier_purchaseorder_report
+#: model_terms:ir.ui.view,arch_db:lexier_purchaseorder_report.lexier_report_purchaseorder_document
+msgid "<strong>Reference/Description</strong>"
+msgstr "<strong>Referència/Descripció</strong>"
+
+#. module: lexier_purchaseorder_report
+#: model_terms:ir.ui.view,arch_db:lexier_purchaseorder_report.lexier_report_purchasestock_order_document
+msgid "<strong>Shipping address:</strong>"
+msgstr "<strong>Adreça d'enviament:</strong>"
+
+#. module: lexier_purchaseorder_report
+#: model_terms:ir.ui.view,arch_db:lexier_purchaseorder_report.lexier_report_purchaseorder_document
+msgid "<strong>Unit Price</strong>"
+msgstr "<strong>Preu un.</strong>"
+
+#. module: lexier_purchaseorder_report
+#: model_terms:ir.ui.view,arch_db:lexier_purchaseorder_report.lexier_report_purchaseorder_document
+#: model_terms:ir.ui.view,arch_db:lexier_purchaseorder_report.lexier_report_purchasestock_order_document
+msgid "Attn."
+msgstr "Atn."
