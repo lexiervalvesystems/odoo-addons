@@ -6,14 +6,49 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-04 23:23+0000\n"
-"PO-Revision-Date: 2023-01-04 23:23+0000\n"
+"POT-Creation-Date: 2024-07-22 11:43+0000\n"
+"PO-Revision-Date: 2024-07-22 11:43+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: lexier_invoice_report
+#: model_terms:ir.ui.view,arch_db:lexier_invoice_report.report_invoice_document
+msgid "<span>Pos</span>"
+msgstr "<span>Pos</span>"
+
+#. module: lexier_invoice_report
+#: model_terms:ir.ui.view,arch_db:lexier_invoice_report.report_invoice_document
+msgid "<span>Reference/Description</span>"
+msgstr "<span>Referència/Descripció</span>"
+
+#. module: lexier_invoice_report
+#: model_terms:ir.ui.view,arch_db:lexier_invoice_report.report_invoice_document
+msgid "<span>Unit Price</span>"
+msgstr "<span>Preu un.</span>"
+
+#. module: lexier_invoice_report
+#: model_terms:ir.ui.view,arch_db:lexier_invoice_report.report_invoice_document
+msgid "<strong>Order Confirmation:</strong>"
+msgstr "<strong>Confirmació de la comanda:</strong>"
+
+#. module: lexier_invoice_report
+#: model_terms:ir.ui.view,arch_db:lexier_invoice_report.report_invoice_document
+msgid "<strong>Project Reference:</strong>"
+msgstr "<strong>Referència del projecte:</strong>"
+
+#. module: lexier_invoice_report
+#: model_terms:ir.ui.view,arch_db:lexier_invoice_report.report_invoice_document
+msgid "<strong>Transfer Number:</strong>"
+msgstr "<strong>Número Albarán:</strong>"
+
+#. module: lexier_invoice_report
+#: model_terms:ir.ui.view,arch_db:lexier_invoice_report.report_invoice_document
+msgid "<strong>Your Order:</strong>"
+msgstr "<strong>La seva comanda:</strong>"
 
 #. module: lexier_invoice_report
 #: model_terms:ir.ui.view,arch_db:lexier_invoice_report.report_invoice_document

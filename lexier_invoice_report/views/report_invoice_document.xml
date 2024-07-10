@@ -1,17 +1,99 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright NuoBiT - Eric Antones <eantones@nuobit.com>
+     Copyright NuoBiT - Frank Cespedes <fcespedes@nuobit.com>
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl) -->
 <odoo>
-    <template id="report_invoice_document" inherit_id="account.report_invoice_document">
-        <!--        <field eval="2" name="priority"/>-->
+    <template
+        id="report_invoice_document"
+        inherit_id="account.report_invoice_document"
+        priority="100"
+    >
+        <xpath expr="//div[hasclass('page')]" position="attributes">
+            <attribute name="style">font-size: 16px;</attribute>
+        </xpath>
+        <xpath expr="//h2" position="attributes">
+            <attribute name="style">font-size: 30px;</attribute>
+            <attribute name="class">mt-2 mb-2</attribute>
+        </xpath>
+        <xpath expr="//div[@id='informations']" position="attributes">
+            <attribute name="class">row</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]/table[1]/thead" position="attributes">
+            <attribute name="style">white-space: nowrap;</attribute>
+        </xpath>
+        <xpath expr="//th[@name='th_priceunit']/span" position="replace">
+            <span>Unit Price</span>
+        </xpath>
+        <xpath expr="//th[@name='th_description']" position="before">
+            <th name="th_pos" class="text-left"><span>Pos</span></th>
+        </xpath>
+        <xpath expr="//td[@name='account_invoice_line_name']" position="before">
+            <td t-esc="line_index + 1" />
+        </xpath>
+        <xpath expr="//th[@name='th_description']/span" position="replace">
+            <span>Reference/Description</span>
+        </xpath>
+        <xpath expr="//div[@name='origin']" position="replace" />
+        <xpath expr="//div[@name='reference']" position="after">
+            <div
+                class="col-auto col-3 mw-100 mb-2"
+                t-if="o.invoice_origin"
+                name="origin"
+            >
+                <strong>Order Confirmation:</strong>
+                <p class="m-0" t-field="o.invoice_origin" />
+            </div>
+        </xpath>
+        <xpath expr="//div[@name='reference']" position="before">
+            <div
+                class="col-auto col-3 mw-100 mb-2"
+                t-if="o.picking_ids"
+                name="transfer"
+            >
+                <strong>Transfer Number:</strong>
+                <t t-set="pickings" t-value="', '.join(o.picking_ids.mapped('name'))" />
+                <p class="m-0" t-esc="pickings" />
+            </div>
+            <t
+                t-set="order_project_ref"
+                t-value="', '.join(
+                sale_line.order_id.project_reference
+                for invoice_line in o.invoice_line_ids
+                for sale_line in invoice_line.sale_line_ids
+                if sale_line.order_id.project_reference
+            )"
+            />
+            <div
+                class="col-auto col-3 mw-100 mb-2"
+                t-if="order_project_ref"
+                name="project_reference"
+            >
+                <strong>Project Reference:</strong>
+                <p class="m-0" t-esc="order_project_ref" />
+            </div>
+        </xpath>
+        <xpath
+            expr="//div[@id='informations']/div[@name='reference']/strong"
+            position="replace"
+        >
+            <strong>Your Order:</strong>
+        </xpath>
+        <xpath expr="//th[@name='th_taxes']/span" position="replace" />
+        <xpath expr="//span[@id='line_tax_ids']" position="replace" />
         <t t-set="address" position="replace">
             <t t-set="address">
                 <t t-if="o.partner_id.parent_id">
-                    <h5 t-field="o.partner_id.parent_id.name" />
+                    <h5
+                        t-field="o.partner_id.parent_id.name"
+                        t-att-style="'color: %s;' % o.company_id.primary_color"
+                    />
                     <span>Attn. <span t-field="o.partner_id.name" /></span>
                 </t>
                 <t t-else="">
-                    <h5 t-field="o.partner_id.name" />
+                    <h5
+                        t-field="o.partner_id.name"
+                        t-att-style="'color: %s;' % o.company_id.primary_color"
+                    />
                 </t>
                 <address
                     t-field="o.partner_id"
