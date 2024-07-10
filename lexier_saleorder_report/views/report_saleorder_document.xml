@@ -1,14 +1,83 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright NuoBiT - Eric Antones <eantones@nuobit.com>
+     Copyright NuoBiT - Frank Cespedes <fcespedes@nuobit.com>
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl) -->
 <odoo>
     <template
         id="lexier_report_saleorder_document"
         inherit_id="sale.report_saleorder_document"
+        priority="100"
     >
+        <xpath expr="//div[hasclass('page')]" position="attributes">
+            <attribute name="style">font-size: 16px;</attribute>
+        </xpath>
+        <xpath expr="//h2" position="attributes">
+            <attribute name="style">font-size: 30px;</attribute>
+            <attribute name="class">mt-2 mb-2</attribute>
+        </xpath>
+        <xpath expr="//h2/t/span[1]" position="replace">
+            <span t-if="doc.state not in ['draft','sent']">Order Confirmation # </span>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]/table[1]/thead" position="attributes">
+            <attribute name="style">white-space: nowrap;</attribute>
+        </xpath>
+        <xpath expr="//div[@t-if='doc.client_order_ref']/strong[1]" position="replace">
+            <strong>Your Order:</strong>
+        </xpath>
+        <xpath expr="//p[@t-field='doc.date_order']" position="replace">
+            <p class="m-0" t-field="doc.date_order" t-options='{"widget": "date"}' />
+        </xpath>
+        <xpath expr="//p[@t-field='doc.validity_date']/.." position="before">
+            <div
+                t-if="doc.commitment_date and doc.state not in ['draft','sent']"
+                class="col-auto col-3 mw-100 mb-2"
+            >
+                <strong>Delivery Date:</strong>
+                <p
+                    class="m-0"
+                    t-field="doc.commitment_date"
+                    t-options='{"widget": "date"}'
+                />
+            </div>
+        </xpath>
+        <xpath expr="//p[@t-field='doc.user_id']/.." position="before">
+            <div class="col-auto justify-content-end" t-if="doc.project_reference">
+                <strong>Project Reference:</strong>
+                <p t-field="doc.project_reference" />
+            </div>
+        </xpath>
+        <xpath expr="//table/thead/tr/th[@name='th_description']" position="before">
+            <th class="text-left">Pos</th>
+        </xpath>
+        <xpath expr="//table/thead/tr/th[@name='th_priceunit']" position="replace">
+            <th name="th_description" class="text-right">Unit Price</th>
+        </xpath>
+        <xpath
+            expr="//table/tbody[hasclass('sale_tbody')]//td[@name='td_name']"
+            position="before"
+        >
+            <td>
+                <span t-esc="line_index + 1" />
+            </td>
+        </xpath>
+        <xpath expr="//th[@name='th_description']" position="replace">
+            <th name="th_description" class="text-left">Reference/Description</th>
+        </xpath>
+        <xpath expr="//span[@t-field='line.product_uom']" position="replace" />
+        <xpath expr="//span[@t-field='line.price_unit']" position="replace">
+            <span
+                t-field="line.price_unit"
+                t-options='{"widget": "monetary", "display_currency": doc.currency_id}'
+            />
+        </xpath>
+        <xpath expr="//th[@name='th_taxes']" position="replace" />
+        <xpath expr="//td[@name='td_taxes']" position="replace" />
         <xpath expr="//div[@t-field='doc.partner_id']" position="replace">
             <t t-if="doc.partner_id.parent_id">
-                <h5 t-field="doc.partner_id.parent_id.name" />
+                <h5
+                    t-field="doc.partner_id.parent_id.name"
+                    t-att-style="'color: %s;' % doc.company_id.primary_color"
+                />
                 <span>Attn. <span t-field="doc.partner_id.name" /></span>
                 <div
                     t-field="doc.partner_id"
@@ -16,10 +85,45 @@
                 />
             </t>
             <t t-else="">
-                <h5 t-field="doc.partner_id.name" />
+                <h5
+                    t-field="doc.partner_id.name"
+                    t-att-style="'color: %s;' % doc.company_id.primary_color"
+                />
                 <div
                     t-field="doc.partner_id"
                     t-options="{'widget': 'contact', 'fields': ['address'], 'no_marker': True}"
+                />
+            </t>
+        </xpath>
+        <xpath expr="//div[@t-field='doc.partner_invoice_id']" position="replace">
+            <t t-if="doc.partner_invoice_id.parent_id">
+                <div t-field="doc.partner_invoice_id.parent_id.name" />
+                <span>Attn. <span t-field="doc.partner_invoice_id.name" /></span>
+                <div
+                    t-field="doc.partner_invoice_id"
+                    t-options='{"widget": "contact", "fields": ["address"], "no_marker": True}'
+                />
+            </t>
+            <t t-else="">
+                <div
+                    t-field="doc.partner_invoice_id"
+                    t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'
+                />
+            </t>
+        </xpath>
+        <xpath expr="//div[@t-field='doc.partner_shipping_id']" position="replace">
+            <t t-if="doc.partner_shipping_id.parent_id">
+                <div t-field="doc.partner_shipping_id.parent_id.name" />
+                <span>Attn. <span t-field="doc.partner_shipping_id.name" /></span>
+                <div
+                    t-field="doc.partner_shipping_id"
+                    t-options='{"widget": "contact", "fields": ["address"], "no_marker": True}'
+                />
+            </t>
+            <t t-else="">
+                <div
+                    t-field="doc.partner_shipping_id"
+                    t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'
                 />
             </t>
         </xpath>
