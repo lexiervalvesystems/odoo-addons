@@ -7,7 +7,7 @@
     "author": "NuoBiT Solutions, S.L.",
     "license": "AGPL-3",
     "category": "Accounting",
-    "website": "https://github.com/lexiersolutions/odoo-addons",
+    "website": "https://github.com/lexiervalvesystems/odoo-addons",
     "depends": ["account"],
     "data": [
         "views/report_invoice_document.xml",
