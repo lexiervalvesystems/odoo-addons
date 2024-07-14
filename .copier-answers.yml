@@ -19,7 +19,7 @@ rebel_module_groups: []
 repo_description: Customization addons for Lexier.
 repo_name: Lexier Odoo Addons
 repo_slug: odoo-addons
-repo_website: https://github.com/OCA/odoo-addons
+repo_website: https://github.com/lexiervalvesystems/odoo-addons
 use_pyproject_toml: false
 use_ruff: false
 
