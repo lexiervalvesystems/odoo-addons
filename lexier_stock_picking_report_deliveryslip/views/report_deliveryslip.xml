@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright NuoBiT - Frank Cespedes <fcespedes@nuobit.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl) -->
+<odoo>
+    <template
+        id="lexier_report_delivery_document"
+        inherit_id="stock.report_delivery_document"
+        priority="100"
+    >
+        <xpath expr="//div[hasclass('page')]" position="attributes">
+            <attribute name="style">font-size: 16px;</attribute>
+        </xpath>
+        <xpath expr="//h2" position="attributes">
+            <attribute name="style">font-size: 30px;</attribute>
+            <attribute name="class">mt-2 mb-2</attribute>
+        </xpath>
+        <xpath expr="//span[@t-field='o.name']" position="before">
+            <span t-if="o.state == 'done'">
+                <span>Delivery note</span>
+            </span>
+            <span t-if="o.state == 'draft'">
+                <span>Draft delivery note</span>
+            </span>
+            <span t-if="o.state == 'cancel'">
+                <span>Cancelled delivery note</span>
+            </span>
+            <span t-if="o.state not in ('done', 'draft', 'cancel')">
+                <span>Pending delivery note</span>
+            </span>
+        </xpath>
+        <t t-set="address" position="replace">
+            <t
+                t-set="partner"
+                t-value="(o.purchase_id.default_location_dest_id_usage == 'customer' and o.sudo().sale_id.partner_id) or o.partner_id"
+            />
+            <t t-set="address">
+                <t t-if="partner.parent_id">
+                    <h5
+                        t-esc="partner.parent_id.name"
+                        t-att-style="'color: %s;' % o.company_id.primary_color"
+                    />
+                    <span>Attn. <span t-esc="partner.name" /></span>
+                </t>
+                <t t-else="">
+                    <h5
+                        t-esc="partner.name"
+                        t-att-style="'color: %s;' % o.company_id.primary_color"
+                    />
+                </t>
+                <address
+                    t-esc="partner"
+                    t-options='{"widget": "contact", "fields": ["address", "vat"], "no_marker": True}'
+                />
+            </t>
+            <t
+                t-set="address_info"
+                t-value="o.pickup_address_id or (o.purchase_id.default_location_dest_id_usage == 'customer' and o.purchase_id.dest_address_id)"
+            />
+            <t t-if="address_info">
+                <t t-set="information_block">
+                    <t t-if="o.pickup_address_id">
+                        <strong>Pickup Address:</strong>
+                    </t>
+                    <t t-else="">
+                        <strong>Delivery Address:</strong>
+                    </t>
+                    <t t-if="address_info.parent_id">
+                        <div t-esc="address_info.parent_id.name" />
+                        <span>Attn. <span t-field="address_info.name" /></span>
+                        <div
+                            t-esc="address_info"
+                            t-options='{"widget": "contact", "fields": ["address", "phone"], "no_marker": True, "phone_icons": True}'
+                        />
+                    </t>
+                    <t t-else="">
+                        <div
+                            t-esc="address_info"
+                            t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'
+                        />
+                    </t>
+                    <t
+                        t-if="o.purchase_id.default_location_dest_id_usage == 'customer' and o.sudo().sale_id.partner_id"
+                    >
+                        <strong>Pickup Address:</strong>
+                        <t t-if="o.partner_id.parent_id">
+                            <div t-esc="o.partner_id.parent_id.name" />
+                            <span>Attn. <span t-field="o.partner_id.name" /></span>
+                            <div
+                                t-esc="o.partner_id"
+                                t-options='{"widget": "contact", "fields": ["address", "phone"], "no_marker": True, "phone_icons": True}'
+                            />
+                        </t>
+                        <t t-else="">
+                            <div
+                                t-esc="o.partner_id"
+                                t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'
+                            />
+                        </t>
+                    </t>
+                </t>
+            </t>
+        </t>
+        <xpath expr="//table[@name='stock_move_table']/thead" position="attributes">
+            <attribute name="style">white-space: nowrap;</attribute>
+        </xpath>
+        <xpath
+            expr="//table[@name='stock_move_line_table']/thead"
+            position="attributes"
+        >
+            <attribute name="style">white-space: nowrap;</attribute>
+        </xpath>
+        <xpath
+            expr="//table[@name='stock_backorder_table']/thead"
+            position="attributes"
+        >
+            <attribute name="style">white-space: nowrap;</attribute>
+        </xpath>
+        <xpath expr="//div[@name='div_origin']" position="replace">
+            <div t-if="o.origin" class="col-2" name="div_origin">
+                <strong>Order Confirmation:</strong>
+                <t
+                    t-if="o.purchase_id.default_location_dest_id_usage == 'customer' and o.sudo().sale_id"
+                >
+                    <p t-field="o.sudo().sale_id.name" />
+                </t>
+                <t t-else="">
+                    <p t-field="o.origin" />
+                </t>
+            </div>
+        </xpath>
+        <xpath expr="//p[@t-field='o.date_done']" position="replace">
+            <p t-field="o.date_done" t-options="{'widget': 'date'}" />
+        </xpath>
+        <xpath expr="//p[@t-field='o.scheduled_date']" position="replace">
+            <p t-field="o.scheduled_date" t-options="{'widget': 'date'}" />
+        </xpath>
+        <xpath expr="//div[hasclass('page')]/div[1]" position="inside">
+            <div class="col-auto justify-content-end" t-if="o.sudo().sale_id.user_id">
+                <strong>Comercial:</strong>
+                <p t-field="o.sudo().sale_id.user_id" />
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]/div[1]" position="after">
+            <t t-if="o.note">
+                <div>
+                    <strong>Notes</strong>
+                </div>
+                <div>
+                    <span t-field="o.note" />
+                </div>
+            </t>
+        </xpath>
+        <xpath expr="//th[@name='th_sb_product']/strong" position="replace">
+            <strong>Reference/Description</strong>
+        </xpath>
+        <xpath expr="//th[@name='th_sb_product']" position="before">
+            <th name="th_sb_pos"><strong>Pos</strong></th>
+        </xpath>
+        <xpath
+            expr="//table[@name='stock_backorder_table']/tbody//tr/td[1]"
+            position="before"
+        >
+            <td>
+                <span t-esc="bo_line_index + 1" />
+            </td>
+        </xpath>
+        <xpath expr="//span[@t-field='bo_line.product_uom']" position="replace" />
+        <xpath expr="//th[@name='th_sm_product']/strong" position="replace">
+            <strong>Reference/Description</strong>
+        </xpath>
+        <xpath expr="//th[@name='th_sm_product']" position="before">
+            <th name="th_sm_pos"><strong>Pos</strong></th>
+        </xpath>
+        <xpath
+            expr="//table[@name='stock_move_table']/tbody/tr/td[1]"
+            position="before"
+        >
+            <td>
+                <span t-esc="move_index + 1" />
+            </td>
+        </xpath>
+        <xpath expr="//span[@t-field='move.product_uom']" position="replace" />
+        <xpath expr="//th[@name='th_sml_product']" position="before">
+            <th name="th_sml_pos"><strong>Pos</strong></th>
+        </xpath>
+        <xpath expr="//th[@name='th_sml_product']/strong" position="replace">
+            <strong>Reference/Description</strong>
+        </xpath>
+    </template>
+    <template
+        id="lexier_stock_report_delivery_has_serial_move_line"
+        inherit_id="stock.stock_report_delivery_has_serial_move_line"
+        priority="100"
+    >
+        <xpath
+            expr="//td[@name='move_line_lot_qty_done']/span[last()]"
+            position="replace"
+        />
+        <xpath expr="//td[1]" position="before">
+            <td>
+                <span t-esc="move_line_index + 1" />
+            </td>
+        </xpath>
+    </template>
+    <template
+        id="lexier_stock_report_delivery_aggregated_move_lines"
+        inherit_id="stock.stock_report_delivery_aggregated_move_lines"
+        priority="100"
+    >
+        <xpath
+            expr="//td[@name='move_line_aggregated_qty_done']/span[last()]"
+            position="replace"
+        />
+        <xpath expr="//td[1]" position="before">
+            <t t-set="position" t-value="list(aggregated_lines).index(line) + 1" />
+            <td>
+                <span t-esc="position" />
+            </td>
+        </xpath>
+    </template>
+    <template
+        id="lexier_report_delivery_document_inherit_sale_stock"
+        inherit_id="sale_stock.report_delivery_document_inherit_sale_stock"
+        priority="100"
+    >
+        <xpath expr="//div[@name='div_sched_date']" position="after">
+            <div class="col-auto justify-content-end" t-if="o.sudo().sale_id.incoterm">
+                <strong>Incoterm:</strong>
+                <p t-field="o.sudo().sale_id.incoterm" />
+            </div>
+            <div
+                class="col-auto justify-content-end"
+                t-if="o.sudo().sale_id.project_reference"
+            >
+                <strong>Project Reference:</strong>
+                <p t-field="o.sudo().sale_id.project_reference" />
+            </div>
+        </xpath>
+        <xpath
+            expr="//div[@t-if='o.sudo().sale_id.client_order_ref']/strong"
+            position="replace"
+        >
+            <strong>Your Order:</strong>
+        </xpath>
+    </template>
+</odoo>
