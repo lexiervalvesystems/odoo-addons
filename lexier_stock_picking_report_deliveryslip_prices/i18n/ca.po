@@ -1,0 +1,70 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* lexier_stock_picking_report_deliveryslip_prices
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-07-19 11:58+0000\n"
+"PO-Revision-Date: 2024-07-19 11:58+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: lexier_stock_picking_report_deliveryslip_prices
+#: model:ir.actions.report,print_report_name:lexier_stock_picking_report_deliveryslip_prices.lexier_report_delivery_note_action
+msgid "'Delivery slip with prices %s' % (object.name, )"
+msgstr "'Albarà valorat %s' % (object.name, )"
+
+#. module: lexier_stock_picking_report_deliveryslip_prices
+#: model_terms:ir.ui.view,arch_db:lexier_stock_picking_report_deliveryslip_prices.lexier_report_deliveryslip_with_prices_document
+msgid "<strong>Amount</strong>"
+msgstr "<strong>Import</strong>"
+
+#. module: lexier_stock_picking_report_deliveryslip_prices
+#: model_terms:ir.ui.view,arch_db:lexier_stock_picking_report_deliveryslip_prices.lexier_report_deliveryslip_with_prices_document
+msgid "<strong>Unit Price</strong>"
+msgstr "<strong>Preu un.</strong>"
+
+#. module: lexier_stock_picking_report_deliveryslip_prices
+#: code:addons/lexier_stock_picking_report_deliveryslip_prices/models/stock_move.py:0
+#, python-format
+msgid "Cannot convert the units of the product %s"
+msgstr "No es poden convertir les unitats del producte %s"
+
+#. module: lexier_stock_picking_report_deliveryslip_prices
+#: model:ir.model,name:lexier_stock_picking_report_deliveryslip_prices.model_res_partner
+msgid "Contact"
+msgstr "Contacte"
+
+#. module: lexier_stock_picking_report_deliveryslip_prices
+#: model:ir.actions.report,name:lexier_stock_picking_report_deliveryslip_prices.lexier_report_delivery_note_action
+msgid "Delivery slip with prices"
+msgstr "Albarà valorat"
+
+#. module: lexier_stock_picking_report_deliveryslip_prices
+#: model:ir.model.fields,field_description:lexier_stock_picking_report_deliveryslip_prices.field_res_partner__display_name
+#: model:ir.model.fields,field_description:lexier_stock_picking_report_deliveryslip_prices.field_stock_move_line__display_name
+msgid "Display Name"
+msgstr "Nom a mostrar"
+
+#. module: lexier_stock_picking_report_deliveryslip_prices
+#: model:ir.model.fields,field_description:lexier_stock_picking_report_deliveryslip_prices.field_res_partner____last_update
+#: model:ir.model.fields,field_description:lexier_stock_picking_report_deliveryslip_prices.field_stock_move_line____last_update
+msgid "Last Modified on"
+msgstr "Última modificació el "
+
+#. module: lexier_stock_picking_report_deliveryslip_prices
+#: model:ir.model,name:lexier_stock_picking_report_deliveryslip_prices.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Moviment del producte (línia de moviment d'estoc)"
+
+#. module: lexier_stock_picking_report_deliveryslip_prices
+#: model:ir.model.fields,field_description:lexier_stock_picking_report_deliveryslip_prices.field_res_partner__sale_price_unit
+#: model:ir.model.fields,field_description:lexier_stock_picking_report_deliveryslip_prices.field_res_users__sale_price_unit
+msgid "Sale unit price"
+msgstr "Preu unitari de venda"

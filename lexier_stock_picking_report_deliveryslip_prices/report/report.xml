@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright NuoBiT - Frank Cespedes <fcespedes@nuobit.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl) -->
+<odoo>
+    <data>
+        <record id="lexier_report_delivery_note_action" model="ir.actions.report">
+            <field name="name">Delivery slip with prices</field>
+            <field
+                name="print_report_name"
+            >'Delivery slip with prices %s' % (object.name, )</field>
+            <field
+                name="report_name"
+            >lexier_stock_picking_report_deliveryslip_prices.lexier_report_deliveryslip_with_prices</field>
+            <field name="model">stock.picking</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="binding_model_id" ref="stock.model_stock_picking" />
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>
