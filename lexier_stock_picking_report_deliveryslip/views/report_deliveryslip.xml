@@ -201,6 +201,11 @@
                 <span t-esc="move_line_index + 1" />
             </td>
         </xpath>
+        <xpath expr="//span[@t-esc='description']" position="replace">
+            <span t-attf-style="white-space: pre-line;">
+                <t t-esc="description" />
+            </span>
+        </xpath>
     </template>
     <template
         id="lexier_stock_report_delivery_aggregated_move_lines"
@@ -211,10 +216,18 @@
             expr="//td[@name='move_line_aggregated_qty_done']/span[last()]"
             position="replace"
         />
-        <xpath expr="//td[1]" position="before">
+        <xpath expr="//td[1]" position="replace">
             <t t-set="position" t-value="list(aggregated_lines).index(line) + 1" />
             <td>
                 <span t-esc="position" />
+            </td>
+            <td>
+                <span t-esc="aggregated_lines[line]['name']" />
+                <p t-if="aggregated_lines[line]['description']">
+                    <span t-attf-style="white-space: pre-line;">
+                        <t t-esc="aggregated_lines[line]['description']" />
+                    </span>
+                </p>
             </td>
         </xpath>
     </template>
