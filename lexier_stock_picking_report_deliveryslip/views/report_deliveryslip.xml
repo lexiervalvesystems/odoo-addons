@@ -54,47 +54,63 @@
             </t>
             <t
                 t-set="address_info"
-                t-value="o.pickup_address_id or (o.purchase_id.default_location_dest_id_usage == 'customer' and o.purchase_id.dest_address_id)"
+                t-value="o.purchase_id.default_location_dest_id_usage == 'customer' and o.purchase_id.dest_address_id"
             />
-            <t t-if="address_info">
+            <t t-if="address_info or o.pickup_address_id">
                 <t t-set="information_block">
-                    <t t-if="o.pickup_address_id">
-                        <strong>Pickup Address:</strong>
-                    </t>
-                    <t t-else="">
+                    <t t-if="address_info">
                         <strong>Delivery Address:</strong>
-                    </t>
-                    <t t-if="address_info.parent_id">
-                        <div t-esc="address_info.parent_id.name" />
-                        <span>Attn. <span t-field="address_info.name" /></span>
-                        <div
-                            t-esc="address_info"
-                            t-options='{"widget": "contact", "fields": ["address", "phone"], "no_marker": True, "phone_icons": True}'
-                        />
-                    </t>
-                    <t t-else="">
-                        <div
-                            t-esc="address_info"
-                            t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'
-                        />
-                    </t>
-                    <t
-                        t-if="o.purchase_id.default_location_dest_id_usage == 'customer' and o.sudo().sale_id.partner_id"
-                    >
-                        <strong>Pickup Address:</strong>
-                        <t t-if="o.partner_id.parent_id">
-                            <div t-esc="o.partner_id.parent_id.name" />
-                            <span>Attn. <span t-field="o.partner_id.name" /></span>
+                        <t t-if="address_info.parent_id">
+                            <div t-esc="address_info.parent_id.name" />
+                            <span>Attn. <span t-field="address_info.name" /></span>
                             <div
-                                t-esc="o.partner_id"
+                                t-esc="address_info"
                                 t-options='{"widget": "contact", "fields": ["address", "phone"], "no_marker": True, "phone_icons": True}'
                             />
                         </t>
                         <t t-else="">
                             <div
-                                t-esc="o.partner_id"
+                                t-esc="address_info"
                                 t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'
                             />
+                        </t>
+                    </t>
+                    <t t-if="o.pickup_address_id">
+                        <strong>Pickup Address:</strong>
+                        <t t-if="o.pickup_address_id.parent_id">
+                            <div t-esc="o.pickup_address_id.parent_id.name" />
+                            <span>Attn. <span t-field="address_info.name" /></span>
+                            <div
+                                t-esc="o.pickup_address_id"
+                                t-options='{"widget": "contact", "fields": ["address", "phone"], "no_marker": True, "phone_icons": True}'
+                            />
+                        </t>
+                        <t t-else="">
+                            <div
+                                t-esc="o.pickup_address_id"
+                                t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'
+                            />
+                        </t>
+                    </t>
+                    <t t-else="">
+                        <t
+                            t-if="o.purchase_id.default_location_dest_id_usage == 'customer' and o.sudo().sale_id.partner_id"
+                        >
+                            <strong>Pickup Address:</strong>
+                            <t t-if="o.partner_id.parent_id">
+                                <div t-esc="o.partner_id.parent_id.name" />
+                                <span>Attn. <span t-field="o.partner_id.name" /></span>
+                                <div
+                                    t-esc="o.partner_id"
+                                    t-options='{"widget": "contact", "fields": ["address", "phone"], "no_marker": True, "phone_icons": True}'
+                                />
+                            </t>
+                            <t t-else="">
+                                <div
+                                    t-esc="o.partner_id"
+                                    t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'
+                                />
+                            </t>
                         </t>
                     </t>
                 </t>
